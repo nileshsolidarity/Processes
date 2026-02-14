@@ -8,13 +8,13 @@ function getGenAI() {
 }
 
 export async function generateEmbedding(text) {
-  const model = getGenAI().getGenerativeModel({ model: 'text-embedding-004' });
+  const model = getGenAI().getGenerativeModel({ model: 'gemini-embedding-001' });
   const result = await model.embedContent(text);
   return result.embedding.values;
 }
 
 export async function generateEmbeddings(texts) {
-  const model = getGenAI().getGenerativeModel({ model: 'text-embedding-004' });
+  const model = getGenAI().getGenerativeModel({ model: 'gemini-embedding-001' });
   const embeddings = [];
 
   for (let i = 0; i < texts.length; i += 5) {

@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(config.geminiApiKey);
  * Generate embedding for a text string using Gemini
  */
 export async function generateEmbedding(text) {
-  const model = genAI.getGenerativeModel({ model: 'text-embedding-004' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-embedding-001' });
   const result = await model.embedContent(text);
   return result.embedding.values; // float[] array of 768 dimensions
 }
@@ -16,7 +16,7 @@ export async function generateEmbedding(text) {
  * Generate embeddings for multiple texts (batched)
  */
 export async function generateEmbeddings(texts) {
-  const model = genAI.getGenerativeModel({ model: 'text-embedding-004' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-embedding-001' });
   const embeddings = [];
 
   // Process in batches of 5 to avoid rate limits
