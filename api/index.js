@@ -113,6 +113,8 @@ function handleCategories(req, res, branch) {
 
 async function handleSync(req, res, branch) {
   try {
+    const folderId = getDriveFolderId();
+    console.log('Sync starting. Folder ID:', folderId);
     const files = await listFiles();
     const store = loadStore();
     let processed = 0;
@@ -144,7 +146,7 @@ async function handleSync(req, res, branch) {
     res.json({ success: true, filesFound: files.length, filesProcessed: processed });
   } catch (err) {
     console.error('Sync error:', err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, details: err.errors ? err.errors : undefined, folderId: getDriveFolderId() });
   }
 }
 
