@@ -181,7 +181,8 @@ async function handleChat(req, res, branch) {
     }
   } catch (err) {
     console.error('Chat error:', err);
-    res.write(`data: ${JSON.stringify({ type: 'error', message: 'Failed to generate response.' })}\n\n`);
+    const errMsg = err.message || String(err);
+    res.write(`data: ${JSON.stringify({ type: 'error', message: `Error: ${errMsg}` })}\n\n`);
   }
   res.end();
 }
