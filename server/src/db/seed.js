@@ -2,13 +2,6 @@ import { getDb, closeDb } from './connection.js';
 
 const branches = [
   { name: 'Head Office', code: 'HO001' },
-  { name: 'Branch Mumbai', code: 'MUM001' },
-  { name: 'Branch Delhi', code: 'DEL001' },
-  { name: 'Branch Bangalore', code: 'BLR001' },
-  { name: 'Branch Chennai', code: 'CHN001' },
-  { name: 'Branch Kolkata', code: 'KOL001' },
-  { name: 'Branch Hyderabad', code: 'HYD001' },
-  { name: 'Branch Pune', code: 'PUN001' },
 ];
 
 try {

@@ -8,13 +8,6 @@ const DEFAULT_STORE = {
   chunks: [],
   branches: [
     { id: 1, name: 'Head Office', code: 'HO001' },
-    { id: 2, name: 'Branch Mumbai', code: 'MUM001' },
-    { id: 3, name: 'Branch Delhi', code: 'DEL001' },
-    { id: 4, name: 'Branch Bangalore', code: 'BLR001' },
-    { id: 5, name: 'Branch Chennai', code: 'CHN001' },
-    { id: 6, name: 'Branch Kolkata', code: 'KOL001' },
-    { id: 7, name: 'Branch Hyderabad', code: 'HYD001' },
-    { id: 8, name: 'Branch Pune', code: 'PUN001' },
   ],
   chatSessions: [],
   chatMessages: [],
@@ -24,7 +17,10 @@ const DEFAULT_STORE = {
 export function loadStore() {
   try {
     if (existsSync(STORE_PATH)) {
-      return JSON.parse(readFileSync(STORE_PATH, 'utf-8'));
+      const store = JSON.parse(readFileSync(STORE_PATH, 'utf-8'));
+      // Always use latest branch list from defaults
+      store.branches = DEFAULT_STORE.branches;
+      return store;
     }
   } catch {
     // corrupted file, reset
