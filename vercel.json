@@ -1,0 +1,22 @@
+{
+  "buildCommand": "cd client && npm install && npm run build",
+  "outputDirectory": "client/dist",
+  "installCommand": "cd api && npm install && cd ../client && npm install",
+  "framework": null,
+  "functions": {
+    "api/**/*.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    { "source": "/api/auth/login", "destination": "/api/auth/login" },
+    { "source": "/api/auth/branches", "destination": "/api/auth/branches" },
+    { "source": "/api/processes/categories", "destination": "/api/processes/categories" },
+    { "source": "/api/processes/:id", "destination": "/api/processes/[id]" },
+    { "source": "/api/processes", "destination": "/api/processes" },
+    { "source": "/api/sync", "destination": "/api/sync" },
+    { "source": "/api/chat", "destination": "/api/chat" },
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
+}
