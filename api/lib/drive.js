@@ -1,17 +1,15 @@
 import { google } from 'googleapis';
-import { config } from './config.js';
+import { getServiceAccountCredentials, getDriveFolderId } from './config.js';
 
 let driveClient;
 
 function getDrive() {
   if (!driveClient) {
-    let credentials;
-    if (config.googleServiceAccountKey) {
-      // Parse from env var (JSON string)
-      credentials = JSON.parse(config.googleServiceAccountKey);
-    } else {
+    const credJson = getServiceAccountCredentials();
+    if (!credJson) {
       throw new Error('Google service account credentials not configured');
     }
+    const credentials = JSON.parse(credJson);
 
     const auth = new google.auth.GoogleAuth({
       credentials,
@@ -25,12 +23,13 @@ function getDrive() {
 
 export async function listFiles() {
   const drive = getDrive();
+  const folderId = getDriveFolderId();
   const files = [];
   let pageToken = null;
 
   do {
     const res = await drive.files.list({
-      q: `'${config.googleDriveFolderId}' in parents and trashed = false`,
+      q: `'${folderId}' in parents and trashed = false`,
       fields: 'nextPageToken, files(id, name, mimeType, modifiedTime, size, webViewLink)',
       pageSize: 100,
       pageToken,

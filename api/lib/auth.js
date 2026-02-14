@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { config } from './config.js';
+import { getJwtSecret } from './config.js';
 
 export function createToken(branch) {
   return jwt.sign(
     { branchId: branch.id, name: branch.name, code: branch.code },
-    config.jwtSecret,
+    getJwtSecret(),
     { expiresIn: '24h' }
   );
 }
@@ -15,7 +15,7 @@ export function verifyToken(req) {
     return null;
   }
   try {
-    return jwt.verify(authHeader.split(' ')[1], config.jwtSecret);
+    return jwt.verify(authHeader.split(' ')[1], getJwtSecret());
   } catch {
     return null;
   }

@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { generateEmbedding, cosineSimilarity } from './embedding.js';
 import { loadStore } from './store.js';
-import { config } from './config.js';
+import { getGeminiApiKey } from './config.js';
 
 export function searchChunks(queryEmbedding, queryText, topK = 5) {
   const store = loadStore();
@@ -57,7 +57,7 @@ ${context}`;
   }
   messages.push({ role: 'user', parts: [{ text: userMessage }] });
 
-  const genAI = new GoogleGenerativeAI(config.geminiApiKey);
+  const genAI = new GoogleGenerativeAI(getGeminiApiKey());
   const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
   const chat = model.startChat({
