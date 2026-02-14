@@ -6,7 +6,7 @@ export function getGeminiApiKey() {
 }
 
 export function getDriveFolderId() {
-  return process.env.GOOGLE_DRIVE_FOLDER_ID;
+  return (process.env.GOOGLE_DRIVE_FOLDER_ID || '').trim();
 }
 
 export function getServiceAccountCredentials() {
