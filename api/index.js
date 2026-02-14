@@ -3,6 +3,7 @@ import { createToken, requireAuth } from './lib/auth.js';
 import { listFiles, downloadFileContent } from './lib/drive.js';
 import { generateEmbeddings } from './lib/embedding.js';
 import { generateRagResponse } from './lib/rag.js';
+import { getDriveFolderId } from './lib/config.js';
 
 export const config = { maxDuration: 60 };
 
@@ -194,7 +195,10 @@ export default async function handler(req, res) {
   // Public routes (no auth)
   if (url === '/api/auth/login' && req.method === 'POST') return handleAuthLogin(req, res);
   if (url === '/api/auth/branches') return handleAuthBranches(req, res);
-  if (url === '/api/health') return res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  if (url === '/api/health') {
+    const folderId = getDriveFolderId();
+    return res.json({ status: 'ok', timestamp: new Date().toISOString(), folderIdLength: folderId ? folderId.length : 0, folderIdPreview: folderId ? folderId.substring(0, 5) + '...' : 'NOT SET' });
+  }
 
   // Protected routes
   const branch = requireAuth(req, res);
